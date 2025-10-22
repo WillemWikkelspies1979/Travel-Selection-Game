@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Passport Showdown: The Great Family Travel Quest</title>
+<style>
+  body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #fefae0, #faedcd, #d4a373);
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    color: #333;
+  }
+  header {
+    background-color: #ffb703;
+    padding: 20px;
+    color: white;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  }
+  h1 {
+    font-size: 1.8em;
+  }
+  img.banner {
+    width: 200px;
+    margin-top: 10px;
+  }
+  .container {
+    padding: 20px;
+    max-width: 600px;
+    margin: auto;
+  }
+  button {
+    background-color: #fb8500;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    font-size: 1em;
+    border-radius: 10px;
+    margin: 10px;
+  }
+  button:hover {
+    background-color: #ffb703;
+  }
+  input, select {
+    padding: 8px;
+    margin: 5px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    width: 80%;
+  }
+  .country-list, .vote-list {
+    background: #fff;
+    border-radius: 12px;
+    padding: 10px;
+    margin-top: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>🧳 Passport Showdown: The Great Family Travel Quest</h1>
+  <img class="banner" src="https://cdn-icons-png.flaticon.com/512/201/201623.png" alt="plane and suitcase" />
+  <p>with Willem, Celestie, Sorika & Adri</p>
+</header>
+
+<div class="container">
+  <p>Enter your 3 nominated countries for each family member and start the fun!</p>
+
+  <div id="nominationPhase">
+    <h3>🌍 Country Nominations</h3>
+    <div id="players"></div>
+    <button onclick="showCountries()">Reveal All Nominations</button>
+  </div>
+
+  <div id="countryList" class="country-list" style="display:none;"></div>
+  <div id="result" class="vote-list"></div>
+</div>
+
+<script>
+const players = ['Willem', 'Celestie', 'Sorika', 'Adri'];
+const nominations = {};
+
+function init() {
+  const playerDiv = document.getElementById('players');
+  players.forEach(p => {
+    const html = `
+      <div>
+        <h4>${p}</h4>
+        <input type='text' id='${p}-1' placeholder='Country 1'>
+        <input type='text' id='${p}-2' placeholder='Country 2'>
+        <input type='text' id='${p}-3' placeholder='Country 3'>
+      </div>`;
+    playerDiv.innerHTML += html;
+  });
+}
+init();
+
+function showCountries() {
+  const countryDiv = document.getElementById('countryList');
+  countryDiv.innerHTML = '<h3>🌎 All Nominated Countries</h3>';
+  let list = [];
+  players.forEach(p => {
+    nominations[p] = [];
+    for(let i=1;i<=3;i++){
+      const val = document.getElementById(`${p}-${i}`).value.trim();
+      if(val) nominations[p].push(val);
+      list.push(`${p}: ${val}`);
+    }
+  });
+  countryDiv.innerHTML += '<p>' + list.join('<br>') + '</p>';
+  countryDiv.style.display = 'block';
+  document.getElementById('result').innerHTML = '<p>Now vote for your favorites or start the veto phase manually!</p>';
+}
+</script>
+</body>
+</html>
